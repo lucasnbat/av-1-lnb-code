@@ -9,7 +9,7 @@
         <v-list-item to="/">
           <v-list-item-title>Início</v-list-item-title>
         </v-list-item>
-        <v-list-item to="/newEvent">
+        <v-list-item to="/NewEventPage">
           <v-list-item-title>Novo evento</v-list-item-title>
         </v-list-item>
       </v-list>
