@@ -14,7 +14,7 @@
             <!-- Aqui cria-se como que uma abertura para enviarmos uma função de deletar para esse componente -->
             <!-- Uma vez que ele tenha essa função em mãos, ele envia o event.id e executa a eliminação-->
             <v-btn @click="$emit('delete-event', event.id)" color="red">Excluir</v-btn>
-            <v-btn :to="'/event/' + event.id">Detalhes</v-btn>
+            <v-btn :to="'/EventInstancePage/' + event.id">Detalhes</v-btn>
           </v-card-actions>
         </v-list-item>
       </v-list>
