@@ -1,7 +1,9 @@
 <template>
   <v-container>
-    <h1>Titulo</h1>
-    <NewEventFormComponent @submit="saveEvent" :event="refReactiveVariableEvent" />
+    <div class="text-center">
+      <h1>{{ isEditing ? 'Editar evento' : 'Criar evento' }}</h1>
+      <NewEventFormComponent @submit="saveEvent" :event="refReactiveVariableEvent" />
+    </div>
   </v-container>
 
 </template>
