@@ -6,26 +6,29 @@
       <v-card-text>
         <v-form>
           <!-- Campos básicos requisitados -->
-          <v-text-field label="Nome" variant="outlined" required />
-          <v-text-field label="Data" variant="outlined" required />
-          <v-text-field label="Local" variant="outlined" required />
-          <v-text-field label="Descrição" variant="outlined" />
+          <v-text-field label="Nome" variant="outlined" v-model="dataEventOnForm.name" required />
+          <v-text-field label="Data" variant="outlined" v-model="dataEventOnForm.date" required />
+          <v-text-field label="Local" variant="outlined" v-model="dataEventOnForm.location" required />
+          <v-text-field label="Descrição" variant="outlined" v-model="dataEventOnForm.description" />
 
-          <v-text-field label="Adicionar/Editar convidado" />
+          <v-text-field label="Adicionar/Editar convidado"
+            :append-icon="guestOnEditing !== null ? 'mdi-check' : 'mdi-plus'" v-model="newGuest"
+            @keyup.enter="guestOnEditing !== null ? updateGuest() : addGuest()"
+            @click:append="guestOnEditing !== null ? updateGuest() : addGuest()" />
 
           <!-- Lista de convidados -->
           <v-list>
-            <v-list-item>
+            <v-list-item v-for="(guest, index) in dataEventOnForm.guests" :key="index">
               <v-list-item-content>
-                <v-list-item-title>Nome do convidado aqui</v-list-item-title>
+                <v-list-item-title>{{ guest }}</v-list-item-title>
               </v-list-item-content>
 
               <!-- Pencil para editar -->
-              <v-btn>
+              <v-btn icon @click="editGuest(index)">
                 <v-icon>mdi-pencil</v-icon>
               </v-btn>
               <!-- Pencil para deletar -->
-              <v-btn>
+              <v-btn icon @click="removeGuest(index)">
                 <v-icon>mdi-delete</v-icon>
               </v-btn>
             </v-list-item>
