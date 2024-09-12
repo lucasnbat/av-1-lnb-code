@@ -1,8 +1,6 @@
 <template>
   <v-container>
     <v-card class="mx-auto" max-width="650">
-      <v-card-title>Novo evento</v-card-title>
-      <v-spacer />
       <v-card-text>
         <v-form @submit.prevent="submit">
           <!-- Campos básicos requisitados -->
