@@ -4,7 +4,7 @@
       <v-card-title>Novo evento</v-card-title>
       <v-spacer />
       <v-card-text>
-        <v-form>
+        <v-form @submit.prevent="submit">
           <!-- Campos básicos requisitados -->
           <v-text-field label="Nome" variant="outlined" v-model="dataEventOnForm.name" required />
           <v-text-field label="Data" variant="outlined" v-model="dataEventOnForm.date" required />
@@ -34,7 +34,7 @@
             </v-list-item>
           </v-list>
           <v-card-actions>
-            <v-btn type="submit" color="error">Cancelar</v-btn>
+            <v-btn color="error">Cancelar</v-btn>
             <v-spacer />
             <v-btn type="submit" color="primary">Salvar</v-btn>
           </v-card-actions>
@@ -46,7 +46,7 @@
 </template>
 
 <script setup>
-import { defineProps, reactive } from 'vue';
+import { defineProps, reactive, watch, ref, defineEmits } from 'vue';
 
 // Necessário definir a estrutura do event aqui,
 const props = defineProps({
@@ -75,7 +75,8 @@ const dataEventOnForm = reactive({
 const newGuest = ref('') // novo convidado
 const guestOnEditing = ref(null) // convidado que está sendo editado
 
-// observa a chave que guarda os convidados e atauliza dataEventOnForm(objeto com eventos e convidados)
+// *observa a chave que guarda os convidados e atauliza dataEventOnForm
+// (objeto com detalhes do evento, eventos e convidados)
 watch(() => props.event, (newEvent) => {
   Object.assign(dataEventOnForm, newEvent)
 })
@@ -88,7 +89,7 @@ const addGuest = () => {
 }
 
 const editGuest = (index) => {
-  newGuest.value = dataEventOnForm.guest[index] // preenche campo com convidado selecionado
+  newGuest.value = dataEventOnForm.guests[index] // preenche campo com convidado selecionado
   guestOnEditing.value = index // marca quem está sendo editado
 }
 
