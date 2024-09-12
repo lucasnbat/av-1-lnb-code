@@ -48,15 +48,27 @@
 <script setup>
 import { defineProps, reactive } from 'vue';
 
-const props = defineProps(['event'])
+// Necessário definir a estrutura do event aqui,
+const props = defineProps({
+  event: {
+    type: Object,
+    default: () => ({
+      name: '',
+      date: '',
+      location: '',
+      description: '',
+      guests: []  // Inicializando a lista de convidados
+    })
+  }
+})
 const emit = defineEmits(['submit'])
 
-// dados do form
+// dados do form (faço um objeto para isso)
 const dataEventOnForm = reactive({
-  // copia tudo que já está nas props do evento
+  // copia tudo que já está na estrutura da var props
   ...props.event,
-  // adiciona atributo que guarda lista convidados
-  // para cada evento e disponibiliza na chave guests
+  // define que a chave guests sempre será preenchida com o valor da chave
+  // props.event.guests do objeto props ou com um array vazio
   guests: props.event.guests || []
 })
 
