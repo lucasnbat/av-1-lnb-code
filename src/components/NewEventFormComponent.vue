@@ -43,5 +43,56 @@
 </template>
 
 <script setup>
+import { defineProps, reactive } from 'vue';
+
+const props = defineProps(['event'])
+const emit = defineEmits(['submit'])
+
+// dados do form
+const dataEventOnForm = reactive({
+  // copia tudo que já está nas props do evento
+  ...props.event,
+  // adiciona atributo que guarda lista convidados
+  // para cada evento e disponibiliza na chave guests
+  guests: props.event.guests || []
+})
+
+const newGuest = ref('') // novo convidado
+const guestOnEditing = ref(null) // convidado que está sendo editado
+
+// observa a chave que guarda os convidados e atauliza dataEventOnForm(objeto com eventos e convidados)
+watch(() => props.event, (newEvent) => {
+  Object.assign(dataEventOnForm, newEvent)
+})
+
+const addGuest = () => {
+  if (newGuest.value.trim()) { //se tiver valor no campo...
+    dataEventOnForm.guests.push(newGuest.value.trim()) // add convidado
+    newGuest.value = ''; // limpa o campo
+  }
+}
+
+const editGuest = (index) => {
+  newGuest.value = dataEventOnForm.guest[index] // preenche campo com convidado selecionado
+  guestOnEditing.value = index // marca quem está sendo editado
+}
+
+const updateGuest = () => {
+  if (newGuest.value.trim() && guestOnEditing.value !== null) {
+    // procura o convidado com index marcado como em edição e atualiza com o valor do campo
+    dataEventOnForm.guests[guestOnEditing.value] = newGuest.value.trim()
+    newGuest.value = '' // limpa campo
+    guestOnEditing = null // agora nenhum guest está sendo editado
+  }
+}
+
+const removeGuest = (index) => {
+  dataEventOnForm.guests.splice(index, 1) // a partir do indice em questão, remove 1
+}
+
+const submit = () => {
+  emit('submit', dataEventOnForm) // emite os dados do form
+}
+
 
 </script>
