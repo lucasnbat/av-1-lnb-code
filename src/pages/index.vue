@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <h1>Eventos</h1>
+    <h1>index.vue</h1>
     <!--Componente com eventos aqui-->
   </v-container>
 </template>
