@@ -6,7 +6,7 @@
     </v-app-bar>
     <v-navigation-drawer v-model="drawerToggle">
       <v-list>
-        <v-list-item to="/">
+        <v-list-item to="/Home">
           <v-list-item-title>Início</v-list-item-title>
         </v-list-item>
         <v-list-item to="/NewEventPage">

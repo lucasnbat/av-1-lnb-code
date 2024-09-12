@@ -25,7 +25,7 @@ const refReactiveVariableEvent = ref({})
 const isEditing = computed(() => !!route.params.id)
 
 const loadEventsFromLocalStorage = () => {
-  return JSON.parse(localStorage.getItem('events') || '[]')
+  return JSON.parse(localStorage.getItem('eventsKey') || '[]')
 }
 
 // carregar dados em caso de estar editando algo
@@ -53,6 +53,6 @@ const saveEvent = (eventData) => {
   localStorage.setItem('eventsKey', JSON.stringify(eventsFromLocalStorage))
 
   // usa o router/redirecionador para voltar a tela index
-  router.push('/')
+  router.push('/Home')
 }
 </script>
