@@ -5,7 +5,4 @@
 <script setup>
 import NewEventFormComponent from '@/components/NewEventFormComponent.vue';
 
-
-
-//
 </script>
