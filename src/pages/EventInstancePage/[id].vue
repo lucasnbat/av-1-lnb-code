@@ -1,13 +1,21 @@
 <template>
   <v-container>
-    <h1>{{ event.name }}</h1>
-    <p>{{ event.description }}</p>
+    <v-card>
+      <v-card-title>{{ event.name }}</v-card-title>
+      <v-card-subtitle>{{ event.description }}</v-card-subtitle>
 
-    <h2 v-if="event.guests && event.guests.length">Convidados</h2>
-    <ul v-if="event.guests && event.guests.length">
-      <li v-for="guest in event.guests" :key="guest">{{ guest }}</li>
-    </ul>
-    <p v-else>Nenhum convidado adicionado.</p>
+      <v-card-text v-if="event.guests && event.guests.length">Convidados</v-card-text>
+      <v-list v-if="event.guests && event.guests.length">
+        <v-list-item v-for="guest in event.guests" :key="guest">
+          <v-list-item-content>
+            {{ guest }}
+          </v-list-item-content>
+
+        </v-list-item>
+      </v-list>
+      <p v-else>Nenhum convidado adicionado.</p>
+    </v-card>
+
   </v-container>
 </template>
 
