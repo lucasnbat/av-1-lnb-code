@@ -2,16 +2,25 @@
   <v-container>
     <v-card>
       <v-card-title>{{ event.name }}</v-card-title>
+      <!--Botão mostrar/ocultar-->
+
       <v-card-subtitle>Descrição: {{ event.description }}</v-card-subtitle>
       <v-card-subtitle>Data: {{ event.date }}</v-card-subtitle>
       <v-card-subtitle>Local: {{ event.location }}</v-card-subtitle>
 
-      <v-card-text v-if="event.guests && event.guests.length"
+      <v-card-actions>
+        <v-btn variant="outlined" color="secondary" @click="toggleGuests" style="display: flex; margin-left: 0.5rem;">
+          {{ showGuests ? 'Ocultar' : 'Mostrar' }} Convidados
+        </v-btn>
+      </v-card-actions>
+
+
+      <v-card-text v-show="event.guests && event.guests.length && showGuests"
         style="display: flex; font-size: larger; font-weight: bold;">
         Convidados
       </v-card-text>
-      <v-list v-if="event.guests && event.guests.length"
-        style="display: flex; flex-direction: column; justify-content: center; top: -1rem;">
+      <v-list v-show="event.guests && event.guests.length && showGuests"
+        style="display: flex; flex-direction: column; justify-content: center;">
         <v-list-item v-for="guest in event.guests" :key="guest">
           <v-list-item-content>
             <v-icon left>mdi-account-outline</v-icon>
@@ -20,9 +29,9 @@
 
         </v-list-item>
       </v-list>
-      <v-list-item v-else>Nenhum convidado adicionado.</v-list-item>
+      <v-list-item v-show="!event.guests || !event.guests.length">Nenhum convidado adicionado.</v-list-item>
       <v-card-actions>
-        <v-btn variant="elevated" color="blue" :to="'/'">Voltar</v-btn>
+        <v-btn variant="elevated" color="blue" :to="'/'" style="margin-left: 0.5rem;">Voltar</v-btn>
       </v-card-actions>
     </v-card>
 
@@ -35,6 +44,11 @@ import { useRoute } from 'vue-router'
 
 const route = useRoute()
 const event = ref({})
+const showGuests = ref(false)
+
+const toggleGuests = () => {
+  showGuests.value = !showGuests.value
+}
 
 const loadEventInstance = () => {
   // vetor de objetos

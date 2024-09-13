@@ -5,9 +5,6 @@
       <v-card-subtitle>Agendado para: {{ event.date }}</v-card-subtitle>
 
       <v-card-text style="display: flex; flex-direction: column; gap: 1rem;">
-        <p>{{ event.description }}</p>
-        <p>Local: {{ event.location }}</p>
-
         <v-card-actions style="display: flex; padding-left: 0rem;">
           <!-- Botão para redirecionar para a página de detalhes -->
           <v-btn variant="elevated" :to="'/EventInstancePage/' + event.id" color="blue">Detalhes</v-btn>
