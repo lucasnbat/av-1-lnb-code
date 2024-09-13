@@ -8,6 +8,9 @@
         <v-card-actions style="display: flex; padding-left: 0rem;">
           <!-- Botão para redirecionar para a página de detalhes -->
           <v-btn variant="elevated" :to="'/EventInstancePage/' + event.id" color="blue">Detalhes</v-btn>
+
+          <v-btn variant="elevated" :to="'/NewEventPage/' + event.id" color="green">Editar</v-btn>
+
           <!-- Botão para excluir o evento -->
           <v-btn variant="elevated" @click="openDeleteModal(event)" color="red">Excluir</v-btn>
         </v-card-actions>
