@@ -12,14 +12,49 @@
           <!-- Botão para redirecionar para a página de detalhes -->
           <v-btn variant="elevated" :to="'/EventInstancePage/' + event.id" color="blue">Detalhes</v-btn>
           <!-- Botão para excluir o evento -->
-          <v-btn variant="elevated" @click="$emit('delete-event', event.id)" color="red">Excluir</v-btn>
+          <v-btn variant="elevated" @click="openDeleteModal(event)" color="red">Excluir</v-btn>
         </v-card-actions>
       </v-card-text>
 
     </v-card>
+    <v-dialog v-model="dialog" max-width="500px">
+      <v-card>
+        <v-card-title class="headline">Confirmar exclusão</v-card-title>
+        <v-card-text>Tem certeza que deseja excluir o evento {{ eventToDelete?.name }}?</v-card-text>
+        <v-card-actions>
+          <v-spacer />
+          <v-btn color="green darken-1" text @click="handleConfirmDelete">Confirmar</v-btn>
+          <v-btn color="red darken-1" text @click="closeDeleteModal">Voltar</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </v-container>
 </template>
 
 <script setup>
+import { ref } from 'vue'
 defineProps(['events'])
+
+// sem isso você não consegue receber a função e usar ela para deletar
+const emit = defineEmits(['delete-event'])
+
+const dialog = ref(false)
+const eventToDelete = ref(null)
+
+const openDeleteModal = (event) => {
+  eventToDelete.value = event // campo evento a deletar preenchido
+  dialog.value = true // abre caixa de dialogo
+}
+
+const closeDeleteModal = () => {
+  dialog.value = false;
+  eventToDelete.value = null;
+};
+
+const handleConfirmDelete = () => {
+  if (eventToDelete.value) {
+    emit('delete-event', eventToDelete.value.id)
+    closeDeleteModal()
+  }
+}
 </script>
