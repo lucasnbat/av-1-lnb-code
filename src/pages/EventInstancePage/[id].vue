@@ -3,8 +3,8 @@
     <h1>{{ event.name }}</h1>
     <p>{{ event.description }}</p>
 
-    <h2 v-if="event.guests.length">Convidados</h2>
-    <ul v-if="event.guests.length">
+    <h2 v-if="event.guests && event.guests.length">Convidados</h2>
+    <ul v-if="event.guests && event.guests.length">
       <li v-for="guest in event.guests" :key="guest">{{ guest }}</li>
     </ul>
     <p v-else>Nenhum convidado adicionado.</p>
@@ -22,6 +22,7 @@ const loadEventInstance = () => {
   // vetor de objetos
   const events = JSON.parse(localStorage.getItem('eventsKey') || '[]')
 
+  console.log(route.params)
   // busca o id do evento na url
   const eventInstanceId = route.params.id
 
