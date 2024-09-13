@@ -4,13 +4,16 @@
       <v-card-text>
         <v-form @submit.prevent="submit">
           <!-- Campos básicos requisitados -->
-          <v-text-field label="Nome" variant="outlined" v-model="dataEventOnForm.name" required />
+          <v-text-field prepend-icon="mdi-account" label="Nome" variant="outlined" v-model="dataEventOnForm.name"
+            required />
           <v-date-input label="Data" variant="outlined" v-model="dataEventOnForm.date" required />
           <!-- <v-text-field label="Data" variant="outlined" v-model="dataEventOnForm.date" required /> -->
-          <v-text-field label="Local" variant="outlined" v-model="dataEventOnForm.location" required />
-          <v-text-field label="Descrição" variant="outlined" v-model="dataEventOnForm.description" />
+          <v-text-field prepend-icon="mdi-map-marker-circle" label="Local" variant="outlined"
+            v-model="dataEventOnForm.location" required />
+          <v-text-field prepend-icon="mdi-chart-timeline" label="Descrição" variant="outlined"
+            v-model="dataEventOnForm.description" />
 
-          <v-text-field label="Adicionar/Editar convidado"
+          <v-text-field prepend-icon="mdi-account-outline" label="Adicionar/Editar convidado"
             :append-icon="guestOnEditing !== null ? 'mdi-check' : 'mdi-plus'" v-model="newGuest"
             @keyup.enter="guestOnEditing !== null ? updateGuest() : addGuest()"
             @click:append="guestOnEditing !== null ? updateGuest() : addGuest()" />

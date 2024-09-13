@@ -3,6 +3,7 @@
     <v-card>
       <v-card-title>{{ event.name }}</v-card-title>
       <v-card-subtitle>{{ event.description }}</v-card-subtitle>
+      <v-card-subtitle>{{ event.date }}</v-card-subtitle>
 
       <v-card-text v-if="event.guests && event.guests.length">Convidados</v-card-text>
       <v-list v-if="event.guests && event.guests.length">
@@ -13,7 +14,7 @@
 
         </v-list-item>
       </v-list>
-      <v-list-item v-else>Nenhum convidado adicionado.</v-list-item >
+      <v-list-item v-else>Nenhum convidado adicionado.</v-list-item>
     </v-card>
 
   </v-container>
