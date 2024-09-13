@@ -55,6 +55,6 @@ const saveEvent = (eventData) => {
   localStorage.setItem('eventsKey', JSON.stringify(eventsFromLocalStorage))
 
   // usa o router/redirecionador para voltar a tela index
-  router.push('/Home')
+  router.push('/')
 }
 </script>

@@ -36,7 +36,7 @@
             </v-list-item>
           </v-list>
           <v-card-actions>
-            <v-btn :to="'/Home/'" color="error">Cancelar</v-btn>
+            <v-btn :to="'/'" color="error">Cancelar</v-btn>
             <v-spacer />
             <v-btn type="submit" color="primary">Salvar</v-btn>
           </v-card-actions>
