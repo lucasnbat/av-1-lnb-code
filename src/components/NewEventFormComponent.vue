@@ -2,7 +2,7 @@
   <v-container>
     <v-card class="mx-auto" max-width="650">
       <v-card-text>
-        <v-form @submit.prevent="submit">
+        <v-form @submit.prevent="openConfirmationDialog">
           <!-- Campos básicos requisitados -->
           <v-text-field prepend-icon="mdi-account" label="Nome" variant="outlined" v-model="dataEventOnForm.name"
             required />
@@ -43,6 +43,22 @@
         </v-form>
       </v-card-text>
     </v-card>
+
+    <!--Modal de confirmação-->
+
+    <v-dialog v-model="dialog" max-width="500px">
+      <v-card>
+        <v-card-title class="headline">Confirmar cadastro</v-card-title>
+        <v-card-text>
+          Tem certeza de que deseja cadastrar este evento?
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="green darken-1" text @click="confirmSubmit">Confirmar</v-btn>
+          <v-btn color="red darken-1" text @click="closeDialog">Voltar</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </v-container>
 
 </template>
@@ -76,6 +92,7 @@ const dataEventOnForm = reactive({
 
 const newGuest = ref('') // novo convidado
 const guestOnEditing = ref(null) // convidado que está sendo editado
+const dialog = ref(false) // estado do modal
 
 // *observa a chave que guarda os convidados e atauliza dataEventOnForm
 // (objeto com detalhes do evento, eventos e convidados)
@@ -107,6 +124,19 @@ const updateGuest = () => {
 const removeGuest = (index) => {
   dataEventOnForm.guests.splice(index, 1) // a partir do indice em questão, remove 1
 }
+
+const openConfirmationDialog = () => {
+  dialog.value = true; // Abre o modal de confirmação
+};
+
+const closeDialog = () => {
+  dialog.value = false; // Fecha o modal de confirmação
+};
+
+const confirmSubmit = () => {
+  emit('submit', dataEventOnForm); // Emite o evento de submissão
+  dialog.value = false; // Fecha o modal após confirmar
+};
 
 const submit = () => {
   emit('submit', dataEventOnForm) // emite os dados do form
