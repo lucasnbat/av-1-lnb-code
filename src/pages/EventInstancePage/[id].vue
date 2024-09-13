@@ -2,13 +2,19 @@
   <v-container>
     <v-card>
       <v-card-title>{{ event.name }}</v-card-title>
-      <v-card-subtitle>{{ event.description }}</v-card-subtitle>
-      <v-card-subtitle>{{ event.date }}</v-card-subtitle>
+      <v-card-subtitle>Descrição: {{ event.description }}</v-card-subtitle>
+      <v-card-subtitle>Data: {{ event.date }}</v-card-subtitle>
+      <v-card-subtitle>Local: {{ event.location }}</v-card-subtitle>
 
-      <v-card-text v-if="event.guests && event.guests.length">Convidados</v-card-text>
-      <v-list v-if="event.guests && event.guests.length">
+      <v-card-text v-if="event.guests && event.guests.length"
+        style="display: flex; font-size: larger; font-weight: bold;">
+        Convidados
+      </v-card-text>
+      <v-list v-if="event.guests && event.guests.length"
+        style="display: flex; flex-direction: column; justify-content: center; top: -1rem;">
         <v-list-item v-for="guest in event.guests" :key="guest">
           <v-list-item-content>
+            <v-icon left>mdi-account-outline</v-icon>
             {{ guest }}
           </v-list-item-content>
 

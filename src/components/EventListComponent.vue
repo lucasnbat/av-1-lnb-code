@@ -2,18 +2,20 @@
   <v-container>
     <v-card v-for="event in events" :key="event.id" class="mb-4">
       <v-card-title>{{ event.name }}</v-card-title>
-      <v-card-subtitle>{{ event.date }}</v-card-subtitle>
+      <v-card-subtitle>Agendado para: {{ event.date }}</v-card-subtitle>
 
-      <v-card-text>
+      <v-card-text style="display: flex; flex-direction: column; gap: 1rem;">
         <p>{{ event.description }}</p>
+        <p>Local: {{ event.location }}</p>
+
+        <v-card-actions style="display: flex; padding-left: 0rem;">
+          <!-- Botão para redirecionar para a página de detalhes -->
+          <v-btn variant="outlined" :to="'/EventInstancePage/' + event.id">Detalhes</v-btn>
+          <!-- Botão para excluir o evento -->
+          <v-btn variant="outlined" @click="$emit('delete-event', event.id)" color="red">Excluir</v-btn>
+        </v-card-actions>
       </v-card-text>
 
-      <v-card-actions>
-        <!-- Botão para excluir o evento -->
-        <v-btn @click="$emit('delete-event', event.id)" color="red">Excluir</v-btn>
-        <!-- Botão para redirecionar para a página de detalhes -->
-        <v-btn :to="'/EventInstancePage/' + event.id">Detalhes</v-btn>
-      </v-card-actions>
     </v-card>
   </v-container>
 </template>
