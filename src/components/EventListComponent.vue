@@ -10,9 +10,9 @@
 
         <v-card-actions style="display: flex; padding-left: 0rem;">
           <!-- Botão para redirecionar para a página de detalhes -->
-          <v-btn variant="outlined" :to="'/EventInstancePage/' + event.id">Detalhes</v-btn>
+          <v-btn variant="elevated" :to="'/EventInstancePage/' + event.id" color="blue">Detalhes</v-btn>
           <!-- Botão para excluir o evento -->
-          <v-btn variant="outlined" @click="$emit('delete-event', event.id)" color="red">Excluir</v-btn>
+          <v-btn variant="elevated" @click="$emit('delete-event', event.id)" color="red">Excluir</v-btn>
         </v-card-actions>
       </v-card-text>
 

@@ -21,6 +21,9 @@
         </v-list-item>
       </v-list>
       <v-list-item v-else>Nenhum convidado adicionado.</v-list-item>
+      <v-card-actions>
+        <v-btn variant="elevated" color="blue" :to="'/'">Voltar</v-btn>
+      </v-card-actions>
     </v-card>
 
   </v-container>
