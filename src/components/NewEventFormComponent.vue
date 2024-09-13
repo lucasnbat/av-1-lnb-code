@@ -5,7 +5,8 @@
         <v-form @submit.prevent="submit">
           <!-- Campos básicos requisitados -->
           <v-text-field label="Nome" variant="outlined" v-model="dataEventOnForm.name" required />
-          <v-text-field label="Data" variant="outlined" v-model="dataEventOnForm.date" required />
+          <v-date-input label="Data" variant="outlined" v-model="dataEventOnForm.date" required />
+          <!-- <v-text-field label="Data" variant="outlined" v-model="dataEventOnForm.date" required /> -->
           <v-text-field label="Local" variant="outlined" v-model="dataEventOnForm.location" required />
           <v-text-field label="Descrição" variant="outlined" v-model="dataEventOnForm.description" />
 
@@ -52,7 +53,7 @@ const props = defineProps({
     type: Object,
     default: () => ({
       name: '',
-      date: '',
+      date: null,
       location: '',
       description: '',
       guests: []  // Inicializando a lista de convidados

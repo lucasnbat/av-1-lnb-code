@@ -13,7 +13,7 @@
 
         </v-list-item>
       </v-list>
-      <p v-else>Nenhum convidado adicionado.</p>
+      <v-list-item v-else>Nenhum convidado adicionado.</v-list-item >
     </v-card>
 
   </v-container>
