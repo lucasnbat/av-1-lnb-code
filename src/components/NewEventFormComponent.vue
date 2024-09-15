@@ -187,6 +187,7 @@ const closeDialog = () => {
 
 // Confirma e envia o evento
 const confirmSubmit = () => {
+  dataEventOnForm.date = formatDate(new Date(dataEventOnForm.date));
   emit('submit', dataEventOnForm);
   dialog.value = false;
 };
@@ -196,4 +197,9 @@ const rules = {
   minGuests: () =>
     dataEventOnForm.guests.length >= 2 || 'Adicione pelo menos dois convidados',
 };
+
+const formatDate = (date) => {
+  return date ? date.toISOString().slice(0, 10) : null;
+};
+
 </script>
