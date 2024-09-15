@@ -1,17 +1,17 @@
 // Plugins
-import { registerPlugins } from '@/plugins'
+import { registerPlugins } from '@/plugins';
 
 // Importa o app
-import App from './App.vue'
+import App from './App.vue';
 
 // Composables
-import { createApp } from 'vue'
+import { createApp } from 'vue';
 
 // Criação do app
-const app = createApp(App)
+const app = createApp(App);
 
 // Registro de plugins (rotas, o proprio app, middlewares...)
-registerPlugins(app)
+registerPlugins(app);
 
 // Montar componentes e renderizar
-app.mount('#app')
+app.mount('#app');
