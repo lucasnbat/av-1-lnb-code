@@ -89,7 +89,9 @@
     </v-dialog>
 
     <!--Snackbar para mensagens-->
-    <v-snack></v-snack>
+    <v-snack v-modal="snackbar.show" @click="!snackbar.show">
+      {{ snackbar.message }}
+    </v-snack>
   </v-container>
 </template>
 
