@@ -71,7 +71,7 @@
               >Salvar</v-btn
             >
             <v-spacer />
-            <v-btn @click="cancel" color="error">Cancelar</v-btn>
+            <v-btn :to="'/'" color="white">Voltar</v-btn>
           </v-card-actions>
         </v-form>
       </v-card-text>
@@ -169,11 +169,6 @@ const isReady = computed(() => {
   const guestsValid = dataEventOnForm.guests.length >= 2;
   return allFieldsFilled && guestsValid;
 });
-
-// Função para cancelar
-const cancel = () => {
-  window.location.reload();
-};
 
 // Abre o modal de confirmação
 const openConfirmationDialog = () => {
