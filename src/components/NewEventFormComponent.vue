@@ -2,7 +2,7 @@
   <v-container>
     <v-card class="mx-auto" max-width="650">
       <v-card-text>
-        <v-form @submit.prevent="handleFormSubmit" ref="form">
+        <v-form @submit.prevent="openConfirmationDialog">
           <!-- Campos básicos requisitados -->
           <v-text-field
             prepend-icon="mdi-account"
@@ -19,7 +19,6 @@
             :rules="[rules.required]"
             required
           />
-          <!-- <v-text-field label="Data" variant="outlined" v-model="dataEventOnForm.date" required /> -->
           <v-text-field
             prepend-icon="mdi-map-marker-circle"
             label="Local"
@@ -53,28 +52,26 @@
               <v-list-item-content>
                 <v-list-item-title>{{ guest }}</v-list-item-title>
               </v-list-item-content>
-
-              <!-- Pencil para editar -->
               <v-btn icon @click="editGuest(index)">
                 <v-icon>mdi-pencil</v-icon>
               </v-btn>
-              <!-- Pencil para deletar -->
               <v-btn icon @click="removeGuest(index)">
                 <v-icon>mdi-delete</v-icon>
               </v-btn>
             </v-list-item>
           </v-list>
           <v-card-actions>
-            <v-btn type="submit" color="primary">Salvar</v-btn>
+            <v-btn type="submit" color="primary" :disabled="!isReady"
+              >Salvar</v-btn
+            >
             <v-spacer />
-            <v-btn :to="'/'" color="error">Cancelar</v-btn>
+            <v-btn @click="cancel" color="error">Cancelar</v-btn>
           </v-card-actions>
         </v-form>
       </v-card-text>
     </v-card>
 
     <!--Modal de confirmação-->
-
     <v-dialog v-model="dialog" max-width="500px">
       <v-card>
         <v-card-title class="headline">Confirmar cadastro</v-card-title>
@@ -91,19 +88,13 @@
       </v-card>
     </v-dialog>
 
-    <v-snackbar
-      v-model="snackbar.show"
-      :timeout="snackbar.timeout"
-      color="error"
-    >
-      {{ snackbar.message }}
-      <v-btn text @click="snackbar.show = false">Fechar</v-btn>
-    </v-snackbar>
+    <!--Snackbar para mensagens-->
+    <v-snack></v-snack>
   </v-container>
 </template>
 
 <script setup>
-import { defineProps, reactive, watch, ref, defineEmits } from 'vue';
+import { defineProps, reactive, watch, ref, defineEmits, computed } from 'vue';
 
 // Necessário definir a estrutura do event aqui,
 const props = defineProps({
@@ -122,10 +113,7 @@ const emit = defineEmits(['submit']);
 
 // dados do form (faço um objeto para isso)
 const dataEventOnForm = reactive({
-  // copia tudo que já está na estrutura da var props
   ...props.event,
-  // define que a chave guests sempre será preenchida com o valor da chave
-  // props.event.guests do objeto props ou com um array vazio
   guests: props.event.guests || [],
 });
 
@@ -138,63 +126,66 @@ const snackbar = reactive({
   timeout: 3000,
 });
 
-// *observa a chave que guarda os convidados e atauliza dataEventOnForm
-// (objeto com detalhes do evento, eventos e convidados)
-watch(
-  () => props.event,
-  (newEvent) => {
-    Object.assign(dataEventOnForm, newEvent);
-  }
-);
-
+// Função para adicionar novo convidado
 const addGuest = () => {
   if (newGuest.value.trim()) {
-    //se tiver valor no campo...
-    dataEventOnForm.guests.push(newGuest.value.trim()); // add convidado
-    newGuest.value = ''; // limpa o campo
+    dataEventOnForm.guests.push(newGuest.value.trim());
+    newGuest.value = ''; // limpa o campo após adicionar o convidado
   }
 };
 
+// Função para editar convidado
 const editGuest = (index) => {
-  newGuest.value = dataEventOnForm.guests[index]; // preenche campo com convidado selecionado
-  guestOnEditing.value = index; // marca quem está sendo editado
+  newGuest.value = dataEventOnForm.guests[index];
+  guestOnEditing.value = index;
 };
 
+// Função para atualizar o convidado
 const updateGuest = () => {
   if (newGuest.value.trim() && guestOnEditing.value !== null) {
-    // procura o convidado com index marcado como em edição e atualiza com o valor do campo
     dataEventOnForm.guests[guestOnEditing.value] = newGuest.value.trim();
-    newGuest.value = ''; // limpa campo
-    guestOnEditing = null; // agora nenhum guest está sendo editado
+    newGuest.value = '';
+    guestOnEditing.value = null;
   }
 };
 
+// Função para remover convidado
 const removeGuest = (index) => {
-  dataEventOnForm.guests.splice(index, 1); // a partir do indice em questão, remove 1
+  dataEventOnForm.guests.splice(index, 1);
 };
 
+// Verifica se todos os campos estão preenchidos e há pelo menos 2 convidados
+const isReady = computed(() => {
+  const allFieldsFilled =
+    dataEventOnForm.name && dataEventOnForm.date && dataEventOnForm.location;
+  const guestsValid = dataEventOnForm.guests.length >= 2;
+  return allFieldsFilled && guestsValid;
+});
+
+// Função para cancelar
+const cancel = () => {
+  dataEventOnForm.name = '';
+  dataEventOnForm.date = '';
+  dataEventOnForm.location = '';
+  dataEventOnForm.description = '';
+  dataEventOnForm.guests = [];
+  newGuest.value = '';
+};
+
+// Abre o modal de confirmação
 const openConfirmationDialog = () => {
-  dialog.value = true; // Abre o modal de confirmação
+  dialog.value = true;
 };
 
+// Fecha o modal de confirmação
 const closeDialog = () => {
-  dialog.value = false; // Fecha o modal de confirmação
+  dialog.value = false;
 };
 
+// Confirma e envia o evento
 const confirmSubmit = () => {
-  emit('submit', dataEventOnForm); // Emite o evento de submissão
-  dialog.value = false; // Fecha o modal após confirmar
-};
-
-const handleFormSubmit = () => {
-  const form = refs.form;
-  if (form.validate() && rules.minGuests()) {
-    openConfirmationDialog();
-  } else {
-    snackbar.message =
-      'Preencha todos os campos obrigatórios e adicione pelo menos 2 convidados!';
-    snackbar.show = true;
-  }
+  emit('submit', dataEventOnForm);
+  dialog.value = false;
 };
 
 const rules = {
