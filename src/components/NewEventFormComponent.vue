@@ -49,12 +49,13 @@
               v-for="(guest, index) in dataEventOnForm.guests"
               :key="index"
             >
-            <v-row align="center">
-                <v-col cols="auto">
-                  <v-list-item-title>{{ guest }}</v-list-item-title>
+              <v-list-item-content class="d-flex align-center">
+                <v-col class="d-flex align-center">
+                  <v-list-item-title class="ml-6">{{
+                    guest
+                  }}</v-list-item-title>
                 </v-col>
-                <v-spacer />
-                <v-col cols="auto">
+                <v-col class="d-flex justify-end">
                   <v-btn icon @click="editGuest(index)">
                     <v-icon>mdi-pencil</v-icon>
                   </v-btn>
@@ -62,7 +63,7 @@
                     <v-icon>mdi-delete</v-icon>
                   </v-btn>
                 </v-col>
-              </v-row>
+              </v-list-item-content>
             </v-list-item>
           </v-list>
           <v-card-actions>
@@ -171,12 +172,7 @@ const isReady = computed(() => {
 
 // Função para cancelar
 const cancel = () => {
-  dataEventOnForm.name = '';
-  dataEventOnForm.date = '';
-  dataEventOnForm.location = '';
-  dataEventOnForm.description = '';
-  dataEventOnForm.guests = [];
-  newGuest.value = '';
+  window.location.reload();
 };
 
 // Abre o modal de confirmação
