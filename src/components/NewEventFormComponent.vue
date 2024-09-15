@@ -49,15 +49,20 @@
               v-for="(guest, index) in dataEventOnForm.guests"
               :key="index"
             >
-              <v-list-item-content>
-                <v-list-item-title>{{ guest }}</v-list-item-title>
-              </v-list-item-content>
-              <v-btn icon @click="editGuest(index)">
-                <v-icon>mdi-pencil</v-icon>
-              </v-btn>
-              <v-btn icon @click="removeGuest(index)">
-                <v-icon>mdi-delete</v-icon>
-              </v-btn>
+            <v-row align="center">
+                <v-col cols="auto">
+                  <v-list-item-title>{{ guest }}</v-list-item-title>
+                </v-col>
+                <v-spacer />
+                <v-col cols="auto">
+                  <v-btn icon @click="editGuest(index)">
+                    <v-icon>mdi-pencil</v-icon>
+                  </v-btn>
+                  <v-btn icon @click="removeGuest(index)">
+                    <v-icon>mdi-delete</v-icon>
+                  </v-btn>
+                </v-col>
+              </v-row>
             </v-list-item>
           </v-list>
           <v-card-actions>
